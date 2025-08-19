@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prelytics - AI-Powered Business Intelligence</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4cc9f0;
+        --dark-color: #1a1a2e;
+        --light-color: #f8f9fa;
+        --success-color: #38b000;
+        --warning-color: #ff9e00;
+        --danger-color: #ef233c;
+        --gradient-primary: linear-gradient(135deg, #4361ee 0%, #3f37c9 100%);
+        --gradient-accent: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+        --border-radius-sm: 8px;
+        --border-radius-md: 12px;
+        --border-radius-lg: 16px;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f5f7ff;
+        color: var(--dark-color);
+        line-height: 1.6;
+      }
+
+      /* Header Styles */
+      .header {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 1rem 2rem;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        z-index: 100;
+      }
+
+      .header-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .logo {
+        width: 45px;
+        height: 45px;
+        border-radius: var(--border-radius-sm);
+        box-shadow: var(--shadow-md);
+        background: white;
+        padding: 5px;
+      }
+
+      .header-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        background: linear-gradient(to right, white, #f8f9fa);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .header-nav {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .nav-link {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: var(--transition);
+        padding: 0.5rem 0;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: white;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: var(--transition);
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Welcome Section */
+      .welcome-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 3rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .welcome-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--gradient-primary);
+      }
+
+      .welcome-section h2 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-size: 2.2rem;
+        font-weight: 700;
+      }
+
+      .welcome-section p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      /* Input Section */
+      .input-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+        position: relative;
+      }
+
+      .input-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--gradient-accent);
+      }
+
+      .section-title {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-title i {
+        font-size: 1.3rem;
+      }
+
+      .input-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .input-group {
+        margin-bottom: 0;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+        color: #555;
+        font-size: 0.95rem;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: var(--border-radius-sm);
+        font-size: 1rem;
+        transition: var(--transition);
+        font-family: "Poppins", sans-serif;
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        padding: 14px 36px;
+        border-radius: var(--border-radius-sm);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      /* Progress Section */
+      .progress-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+        display: none;
+        text-align: center;
+      }
+
+      .progress-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .progress-bar-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: #e1e5e9;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 1.5rem 0;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: var(--gradient-primary);
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+
+      .progress-text {
+        color: #666;
+        font-size: 0.95rem;
+      }
+
+      /* Success Message */
+      .success-message {
+        background: #e6f7ee;
+        color: var(--success-color);
+        padding: 1.25rem;
+        border-radius: var(--border-radius-sm);
+        margin-bottom: 2rem;
+        display: none;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 500;
+        border-left: 4px solid var(--success-color);
+      }
+
+      /* Tabs Container */
+      .tabs-container {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-xl);
+        margin-bottom: 2rem;
+        display: none;
+        overflow: hidden;
+      }
+
+      .tabs-header {
+        display: flex;
+        background: white;
+        border-bottom: 1px solid #e1e5e9;
+      }
+
+      .tab-button {
+        flex: 1;
+        padding: 1.25rem 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #666;
+        transition: var(--transition);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .tab-button:hover {
+        color: var(--primary-color);
+        background: rgba(67, 97, 238, 0.05);
+      }
+
+      .tab-button.active {
+        color: var(--primary-color);
+        background: white;
+      }
+
+      .tab-button.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--gradient-primary);
+      }
+
+      .tab-content {
+        display: none;
+        padding: 2.5rem;
+        min-height: 500px;
+      }
+
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Metrics Grid */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .metric-item {
+        background: white;
+        border-radius: var(--border-radius-md);
+        padding: 1.75rem;
+        box-shadow: var(--shadow-md);
+        border-left: 4px solid var(--primary-color);
+        transition: var(--transition);
+      }
+
+      .metric-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .metric-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+      }
+
+      .metric-label {
+        font-size: 1rem;
+        color: #666;
+        font-weight: 500;
+      }
+
+      /* Chart Containers */
+      .chart-container {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+        display: none;
+      }
+
+      .chart-container h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+
+      .chart-card {
+        background: white;
+        border-radius: var(--border-radius-md);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border-left: 4px solid var(--primary-color);
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
+      }
+
+      .chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .chart-card h4 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        text-align: center;
+      }
+
+      .chart-card canvas {
+        flex: 1;
+        max-height: 250px;
+      }
+
+      /* SWOT Analysis */
+      .swot-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+      }
+
+      .swot-section h4 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .swot-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .swot-item {
+        background: #f8f9fa;
+        border-radius: var(--border-radius-md);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .swot-item h5 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .swot-item ul {
+        list-style-type: none;
+      }
+
+      .swot-item li {
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+        line-height: 1.6;
+      }
+
+      .swot-item li::before {
+        content: "•";
+        color: var(--primary-color);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        font-size: 1.2rem;
+      }
+
+      .strength-item li::before {
+        color: var(--success-color);
+      }
+
+      .weakness-item li::before {
+        color: var(--danger-color);
+      }
+
+      /* Competitor Analysis */
+      .competitor-analysis-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+      }
+
+      .competitor-analysis-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .competitor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .competitor-card {
+        background: white;
+        border-radius: var(--border-radius-md);
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border-left: 4px solid var(--primary-color);
+        transition: var(--transition);
+      }
+
+      .competitor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .competitor-card h5 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .competitor-content {
+        margin-top: 1rem;
+      }
+
+      .competitor-content p {
+        margin: 0.8rem 0;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .competitor-content strong {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      /* Product Analysis */
+      .product-analysis-section {
+        background: white;
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+      }
+
+      .product-analysis-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-align: center;
+        position: relative;
+        padding-bottom: 1rem;
+      }
+
+      .product-analysis-section h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+      }
+
+      .product-analysis-content {
+        font-size: 1.1rem;
+        color: #333;
+        line-height: 1.8;
+      }
+
+      .product-analysis-content h4 {
+        color: var(--primary-color);
+        margin: 2.5rem 0 1.5rem 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e1e5e9;
+      }
+
+      /* Insight Cards */
+      .insight-card {
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: var(--border-radius-md);
+        padding: 2rem;
+        margin: 1.5rem 0;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .insight-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--gradient-accent);
+      }
+
+      .insight-card h4 {
+        color: white;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .insight-card ul {
+        list-style-type: none;
+      }
+
+      .insight-card li {
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+        line-height: 1.6;
+      }
+
+      .insight-card li::before {
+        content: "•";
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        font-size: 1.2rem;
+      }
+
+      /* Metric Highlight */
+      .metric-highlight {
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: var(--border-radius-md);
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+      }
+
+      .metric-highlight:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .metric-highlight .metric-value {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+
+      .metric-highlight .metric-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 992px) {
+        .input-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .charts-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .tabs-header {
+          flex-wrap: wrap;
+        }
+
+        .tab-button {
+          flex: 1 0 150px;
+          padding: 1rem;
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+
+        .header-nav {
+          width: 100%;
+          overflow-x: auto;
+          padding-bottom: 0.5rem;
+        }
+
+        .welcome-section {
+          padding: 2rem 1.5rem;
+        }
+
+        .input-section {
+          padding: 1.5rem;
+        }
+
+        .tab-content {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-container">
+        <div class="logo-container">
+          <img src="logo.jpg" alt="Prelytics Logo" class="logo" />
+          <h1 class="header-title">Prelytics</h1>
+  
+    </header>
+
+    <div class="container">
+      <div id="welcomeSection" class="welcome-section">
+        <h2>Unlock Business Intelligence with AI</h2>
+        <p>
+          Get comprehensive, AI-powered business intelligence for any company in
+          minutes. Simply enter the company name and website URL below to
+          generate detailed financial analysis, competitive landscape,
+          operational insights, and strategic recommendations.
+        </p>
+      </div>
+
+      <div class="input-section">
+        <h3 class="section-title">
+          <i class="fas fa-search"></i> Company Analysis Request
+        </h3>
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="companyName">Company Name</label>
+            <input
+              type="text"
+              id="companyName"
+              placeholder="e.g., Apple, Microsoft, Tesla"
+            />
+          </div>
+          <div class="input-group">
+            <label for="companyUrl">Company Website</label>
+            <input
+              type="url"
+              id="companyUrl"
+              placeholder="e.g., https://www.apple.com"
+            />
+          </div>
+        </div>
+        <div class="btn-container">
+          <button class="btn" onclick="startAnalysis()">
+            <i class="fas fa-play"></i> Run Analysis
+          </button>
+        </div>
+      </div>
+
+      <div id="progressSection" class="progress-section">
+        <h3><i class="fas fa-cog fa-spin"></i> Analysis in Progress</h3>
+        <div class="progress-bar-container">
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+        <p id="progressText" class="progress-text">Initializing analysis...</p>
+      </div>
+
+      <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle"></i> Analysis completed successfully!
+        Explore the insights below.
+      </div>
+
+      <div id="tabsContainer" class="tabs-container">
+        <div class="tabs-header">
+          <button class="tab-button active" onclick="showTab('client')">
+            <i class="fas fa-building"></i> Client Intelligence
+          </button>
+          <button class="tab-button" onclick="showTab('financial')">
+            <i class="fas fa-chart-line"></i> Financial Insights
+          </button>
+          <button class="tab-button" onclick="showTab('operational')">
+            <i class="fas fa-cogs"></i> Operational Signals
+          </button>
+          <button class="tab-button" onclick="showTab('competitor')">
+            <i class="fas fa-users"></i> Competitor Analysis
+          </button>
+          <button class="tab-button" onclick="showTab('product')">
+            <i class="fas fa-box-open"></i> Product Analysis
+          </button>
+        </div>
+
+        <div id="client" class="tab-content active">
+          <div id="clientContent"></div>
+        </div>
+
+        <div id="financial" class="tab-content">
+          <div id="financialMetrics" class="metrics-grid"></div>
+          <div class="chart-container">
+            <div class="charts-grid">
+              <div class="chart-card">
+                <h4>Revenue vs Net Income</h4>
+                <canvas id="revenueChart" width="400" height="300"></canvas>
+              </div>
+              <div class="chart-card">
+                <h4>Margin Comparison</h4>
+                <canvas id="marginChart" width="400" height="300"></canvas>
+              </div>
+            </div>
+            <div
+              style="display: flex; justify-content: center; margin-top: 2rem"
+            >
+              <div class="chart-card" style="width: 500px; height: 400px">
+                <h4>Cash Flow Analysis</h4>
+                <canvas id="cashFlowChart" width="450" height="350"></canvas>
+              </div>
+            </div>
+          </div>
+          <div id="swotContent"></div>
+        </div>
+
+        <div id="operational" class="tab-content">
+          <div id="operationalContent"></div>
+        </div>
+
+        <div id="competitor" class="tab-content">
+          <div id="competitorContent"></div>
+        </div>
+
+        <div id="product" class="tab-content">
+          <div id="productContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function startAnalysis() {
+        const companyName = document.getElementById("companyName").value;
+        const companyUrl = document.getElementById("companyUrl").value;
+
+        if (!companyName || !companyUrl) {
+          alert("Please enter both company name and website URL");
+          return;
+        }
+
+        document.getElementById("progressSection").style.display = "block";
+        document.getElementById("tabsContainer").style.display = "none";
+        document.getElementById("successMessage").style.display = "none";
+        document.getElementById("welcomeSection").style.display = "none";
+
+        let progress = 0;
+        const progressFill = document.getElementById("progressFill");
+        const progressText = document.getElementById("progressText");
+        const steps = [
+          "Initializing analysis...",
+          "Gathering company intelligence...",
+          "Analyzing financial data...",
+          "Processing operational signals...",
+          "Generating competitive analysis...",
+          "Finalizing report...",
+        ];
+
+        const progressInterval = setInterval(() => {
+          progress += 2;
+          progressFill.style.width = progress + "%";
+
+          const stepIndex = Math.floor(progress / 16.67);
+          if (stepIndex < steps.length) {
+            progressText.textContent = steps[stepIndex];
+          }
+        }, 100);
+
+        try {
+          const response = await fetch("/api/analyze", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              companyName: companyName,
+              companyUrl: companyUrl,
+            }),
+          });
+
+          clearInterval(progressInterval);
+          progressFill.style.width = "100%";
+          progressText.textContent = "Analysis complete!";
+
+          if (response.ok) {
+            const data = await response.json();
+
+            setTimeout(() => {
+              document.getElementById("progressSection").style.display = "none";
+              document.getElementById("successMessage").style.display = "flex";
+              document.getElementById("tabsContainer").style.display = "block";
+
+              populateAnalysisData(companyName, data);
+              // THE BUGGY, NON-EXISTENT FUNCTION CALL IS REMOVED FROM HERE
+            }, 1000);
+          } else {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Analysis failed");
+          }
+        } catch (error) {
+          clearInterval(progressInterval);
+          document.getElementById("progressSection").style.display = "none";
+          alert("Error during analysis: " + error.message);
+          document.getElementById("welcomeSection").style.display = "block";
+        }
+      }
+
+      function showTab(tabName) {
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabContents.forEach((content) => content.classList.remove("active"));
+
+        const tabButtons = document.querySelectorAll(".tab-button");
+        tabButtons.forEach((button) => button.classList.remove("active"));
+
+        document.getElementById(tabName).classList.add("active");
+
+        event.target.classList.add("active");
+      }
+
+      function populateAnalysisData(companyName, results) {
+        console.log("Populating analysis data for:", companyName);
+        console.log("Raw results:", results);
+
+        const financialMetrics = results.financial_metrics || {};
+        const swotAnalysis = results.swot_analysis || {};
+        const operationalSignals = results.operational_signals || [];
+        const competitorAnalysis = results.competitor_analysis || [];
+        const clientIntelligence = results.client_intelligence || "";
+        const productAnalysis = results.product_analysis || "";
+
+        console.log("Competitor analysis:", competitorAnalysis);
+
+        const revenue = financialMetrics["Revenue"] || "N/A";
+        const netIncome = financialMetrics["Net Income"] || "N/A";
+        const profitMargin = financialMetrics["Profit Margin (%)"] || "N/A";
+        const freeCashFlow = financialMetrics["Free Cash Flow"] || "N/A";
+        const grossMargin = financialMetrics["Gross Margin (%)"] || "N/A";
+        const ebitdaMargin = financialMetrics["EBITDA Margin (%)"] || "N/A";
+
+        // Client Intelligence - Beautiful card layout
+        const clientContent = document.getElementById("clientContent");
+        clientContent.innerHTML = `
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <h5 class="metric-label" style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-industry"></i> Business Focus</h5>
+                <div style="font-size: 1rem; color: #333; line-height: 1.6;">${extractCompanyInfo(
+                  clientIntelligence,
+                  "What the company does"
+                )}</div>
+            </div>
+            <div class="metric-item">
+                 <h5 class="metric-label" style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-users"></i> Target Customers</h5>
+                <div style="font-size: 1rem; color: #333; line-height: 1.6;">${extractCompanyInfo(
+                  clientIntelligence,
+                  "Who their typical customers are"
+                )}</div>
+            </div>
+            <div class="metric-item">
+                 <h5 class="metric-label" style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-code"></i> Technology Stack</h5>
+                <div style="font-size: 1rem; color: #333; line-height: 1.6;">${extractCompanyInfo(
+                  clientIntelligence,
+                  "What technologies or platforms they rely on"
+                )}</div>
+            </div>
+            <div class="metric-item">
+                 <h5 class="metric-label" style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;"><i class="fas fa-bullseye"></i> Strategic Priorities</h5>
+                <div style="font-size: 1rem; color: #333; line-height: 1.6;">${extractCompanyInfo(
+                  clientIntelligence,
+                  "Strategic priorities or focus areas"
+                )}</div>
+            </div>
+        </div>
+        `;
+
+        // Financial Metrics - Enhanced with highlights
+        const financialMetricsElement =
+          document.getElementById("financialMetrics");
+        financialMetricsElement.innerHTML = `
+              <div class="metric-highlight">
+                  <div class="metric-value">${revenue}</div>
+                  <div class="metric-label">Revenue</div>
+              </div>
+              <div class="metric-highlight">
+                  <div class="metric-value">${netIncome}</div>
+                  <div class="metric-label">Net Income</div>
+              </div>
+              <div class="metric-highlight">
+                  <div class="metric-value">${profitMargin}</div>
+                  <div class="metric-label">Profit Margin</div>
+              </div>
+              <div class="metric-highlight">
+                  <div class="metric-value">${freeCashFlow}</div>
+                  <div class="metric-label">Free Cash Flow</div>
+              </div>
+              <div class="metric-highlight">
+                  <div class="metric-value">${grossMargin}</div>
+                  <div class="metric-label">Gross Margin</div>
+              </div>
+              <div class="metric-highlight">
+                  <div class="metric-value">${ebitdaMargin}</div>
+                  <div class="metric-label">EBITDA Margin</div>
+              </div>
+            `;
+
+        // Financial Visualizations
+        const chartContainer = document.querySelector(".chart-container");
+        chartContainer.style.display = "block";
+
+        // Initialize all charts
+        initializeFinancialCharts(financialMetrics);
+
+        // SWOT Analysis - Beautiful organized layout
+        const swotContent = document.getElementById("swotContent");
+        const strengths = swotAnalysis.Strengths || [];
+        const weaknesses = swotAnalysis.Weaknesses || [];
+        const opportunities = swotAnalysis.Opportunities || [];
+        const threats = swotAnalysis.Threats || [];
+
+        swotContent.innerHTML = `
+              <div class="swot-section">
+                  <h4><i class="fas fa-clipboard-list"></i> SWOT Analysis for ${companyName}</h4>
+                  <div class="swot-grid">
+                      <div class="swot-item strength-item">
+                          <h5><i class="fas fa-check-circle"></i> Strengths</h5>
+                          <ul>
+                              ${strengths
+                                .map((strength) => `<li>${strength}</li>`)
+                                .join("")}
+                          </ul>
+                      </div>
+                      <div class="swot-item weakness-item">
+                          <h5><i class="fas fa-exclamation-circle"></i> Weaknesses</h5>
+                          <ul>
+                              ${weaknesses
+                                .map((weakness) => `<li>${weakness}</li>`)
+                                .join("")}
+                          </ul>
+                      </div>
+                      <div class="swot-item">
+                          <h5><i class="fas fa-lightbulb"></i> Opportunities</h5>
+                          <ul>
+                              ${opportunities
+                                .map((opportunity) => `<li>${opportunity}</li>`)
+                                .join("")}
+                          </ul>
+                      </div>
+                      <div class="swot-item">
+                          <h5><i class="fas fa-shield-alt"></i> Threats</h5>
+                          <ul>
+                              ${threats
+                                .map((threat) => `<li>${threat}</li>`)
+                                .join("")}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+            `;
+
+        // Operational Signals - Gradient insight cards
+        const operationalContent =
+          document.getElementById("operationalContent");
+        operationalContent.innerHTML = `
+              <div class="insight-card">
+                  <h4><i class="fas fa-lightbulb"></i> Key Operational Insights for ${companyName}</h4>
+                  <ul>
+                      ${operationalSignals
+                        .map((signal) => `<li>${signal}</li>`)
+                        .join("")}
+                  </ul>
+              </div>
+            `;
+
+        // Competitor Analysis - Beautiful formatted display
+        console.log("Competitor analysis data:", competitorAnalysis);
+        const competitorContent = document.getElementById("competitorContent");
+
+        let competitorAnalysisText = "";
+        if (Array.isArray(competitorAnalysis)) {
+          competitorAnalysisText = competitorAnalysis.join("\n");
+        } else if (typeof competitorAnalysis === "string") {
+          competitorAnalysisText = competitorAnalysis;
+        }
+
+        competitorContent.innerHTML = `
+              <div>
+                  <div class="competitor-grid">
+                      ${
+                        competitorAnalysisText
+                          ? formatCompetitorAnalysis(competitorAnalysisText)
+                          : '<div class="competitor-card"><p>No competitor analysis available</p></div>'
+                      }
+                  </div>
+              </div>
+            `;
+
+        // Product Analysis - Clean info card
+        const productContent = document.getElementById("productContent");
+        productContent.innerHTML = `
+              <div>
+                  <div class="product-analysis-content">${formatProductAnalysis(
+                    productAnalysis
+                  )}</div>
+              </div>
+            `;
+      }
+
+      function extractCompanyInfo(text, searchTerm) {
+        if (!text) return "Information not available";
+
+        const pattern = /• What the company does:([\s\S]*?)• Who their typical customers are:([\s\S]*?)• What technologies or platforms they rely on:([\s\S]*?)• Strategic priorities or focus areas:([\s\S]*)/;
+        const match = text.match(pattern);
+
+        if (match) {
+          switch (searchTerm) {
+            case "What the company does":
+              return match[1].trim();
+            case "Who their typical customers are":
+              return match[2].trim();
+            case "What technologies or platforms they rely on":
+              return match[3].trim();
+            case "Strategic priorities or focus areas":
+              return match[4].trim();
+            default:
+              return "Information not available";
+          }
+        }
+
+        return "Information not available";
+      }
+
+      function formatProductAnalysis(analysis) {
+        if (!analysis) return "Product analysis not available";
+
+        let cleanAnalysis = analysis;
+        if (cleanAnalysis.includes("PRODUCT ANALYSIS FOR")) {
+          cleanAnalysis = cleanAnalysis
+            .replace(/PRODUCT ANALYSIS FOR [A-Z]+/gi, "")
+            .trim();
+        }
+
+        const sections = [
+          "CLIENT STRATEGY MEMO",
+          "CLIENT OPPORTUNITY BRIEF",
+          "AGILISIUM PRODUCT FIT",
+          "COMPETITIVE POSITIONING",
+          "PITCH STRATEGY",
+        ];
+
+        let formatted = "";
+
+        for (const section of sections) {
+          if (cleanAnalysis.includes(section)) {
+            const startIndex = cleanAnalysis.indexOf(section);
+            const nextSectionIndex = sections.findIndex(
+              (s) =>
+                s !== section &&
+                cleanAnalysis.indexOf(s, startIndex) > startIndex
+            );
+
+            let sectionContent = "";
+            if (nextSectionIndex !== -1) {
+              const nextSection = sections[nextSectionIndex];
+              const endIndex = cleanAnalysis.indexOf(nextSection, startIndex);
+              sectionContent = cleanAnalysis
+                .substring(startIndex + section.length, endIndex)
+                .trim();
+            } else {
+              sectionContent = cleanAnalysis
+                .substring(startIndex + section.length)
+                .trim();
+            }
+
+            formatted += `<h4>${section}</h4>`;
+
+            const lines = sectionContent.split("\n");
+            for (let line of lines) {
+              line = line.trim();
+              if (line.startsWith("•") || line.startsWith("-")) {
+                formatted += `<div class="bullet-point" style="margin: 1rem 0; padding-left: 2rem; position: relative; background: rgba(102, 126, 234, 0.05); padding: 1rem 1rem 1rem 2rem; border-radius: 8px; border-left: 4px solid #4361ee;">
+                                <span style="position: absolute; left: 0.5rem; color: #4361ee; font-weight: bold; font-size: 1.2rem;">•</span>
+                                <span style="margin-left: 0.5rem; font-weight: 500;">${line
+                                  .substring(1)
+                                  .trim()}</span>
+                            </div>`;
+              } else if (
+                line &&
+                !line.includes("CLIENT STRATEGY MEMO") &&
+                !line.includes("CLIENT OPPORTUNITY BRIEF") &&
+                !line.includes("AGILISIUM PRODUCT FIT") &&
+                !line.includes("COMPETITIVE POSITIONING") &&
+                !line.includes("PITCH STRATEGY")
+              ) {
+                formatted += `<p style="margin: 1.2rem 0; line-height: 1.8; color: #333; font-size: 1.1rem; padding: 0.5rem 0;">${line}</p>`;
+              }
+            }
+          }
+        }
+
+        return formatted;
+      }
+
+      function formatCompetitorAnalysis(analysis) {
+        console.log("Formatting competitor analysis:", analysis);
+        if (!analysis || analysis.length === 0)
+          return '<div class="competitor-card"><p>No competitor analysis available</p></div>';
+
+        let analysisLines = analysis;
+        if (typeof analysis === "string") {
+          analysisLines = analysis.split("\n").filter((line) => line.trim());
+        }
+
+        let formatted = "";
+        let currentCompany = "";
+        let currentSection = "";
+        let companyData = {};
+
+        for (let item of analysisLines) {
+          const trimmedItem = item.trim();
+          console.log("Processing line:", trimmedItem);
+
+          if (trimmedItem.startsWith("•") && trimmedItem.includes(":")) {
+            if (currentCompany && Object.keys(companyData).length > 0) {
+              formatted += createCompetitorCard(currentCompany, companyData);
+              companyData = {};
+            }
+
+            currentCompany = trimmedItem.replace("•", "").split(":")[0].trim();
+            companyData = {};
+            console.log("Found company:", currentCompany);
+          } else if (
+            trimmedItem.includes("Services:") ||
+            trimmedItem.includes("Strengths:") ||
+            trimmedItem.includes("Weaknesses:") ||
+            trimmedItem.includes("Agilisium Advantage:")
+          ) {
+            const parts = trimmedItem.split(":");
+            if (parts.length >= 2) {
+              currentSection = parts[0].trim();
+              const content = parts.slice(1).join(":").trim();
+              if (content) {
+                companyData[currentSection] = content;
+              }
+              console.log(
+                "Found section:",
+                currentSection,
+                "with content:",
+                content
+              );
+            }
+          } else if (
+            trimmedItem.startsWith("•") ||
+            trimmedItem.startsWith("-")
+          ) {
+            if (currentSection && companyData[currentSection]) {
+              companyData[currentSection] += " " + trimmedItem;
+            } else if (currentSection) {
+              companyData[currentSection] = trimmedItem;
+            }
+          } else if (
+            trimmedItem &&
+            !trimmedItem.includes("Competitive Landscape Analysis")
+          ) {
+            if (currentSection && companyData[currentSection]) {
+              companyData[currentSection] += " " + trimmedItem;
+            } else if (currentSection) {
+              companyData[currentSection] = trimmedItem;
+            }
+          }
+        }
+
+        if (currentCompany && Object.keys(companyData).length > 0) {
+          formatted += createCompetitorCard(currentCompany, companyData);
+        }
+
+        console.log("Final formatted result:", formatted);
+        return formatted;
+      }
+
+      function createCompetitorCard(companyName, companyData) {
+        console.log("Creating competitor card for:", companyName, companyData);
+        return `
+              <div class="competitor-card">
+                  <h5><i class="fas fa-building"></i> ${companyName}</h5>
+                  <div class="competitor-content">
+                      ${
+                        companyData.Services
+                          ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong><i class="fas fa-cog"></i> Services:</strong>
+                                <p>${companyData.Services}</p>
+                            </div>
+                        `
+                          : ""
+                      }
+                      ${
+                        companyData.Strengths
+                          ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color: #38b000;"><i class="fas fa-check-circle"></i> Strengths:</strong>
+                                <p>${companyData.Strengths}</p>
+                            </div>
+                        `
+                          : ""
+                      }
+                      ${
+                        companyData.Weaknesses
+                          ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color: #ef233c;"><i class="fas fa-exclamation-circle"></i> Weaknesses:</strong>
+                                <p>${companyData.Weaknesses}</p>
+                            </div>
+                        `
+                          : ""
+                      }
+                      ${
+                        companyData["Agilisium Advantage"]
+                          ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color: #ff9e00;"><i class="fas fa-rocket"></i> Agilisium Advantage:</strong>
+                                <p>${companyData["Agilisium Advantage"]}</p>
+                            </div>
+                        `
+                          : ""
+                      }
+                  </div>
+              </div>
+            `;
+      }
+
+      function initializeFinancialCharts(financialMetrics) {
+        console.log(
+          "Initializing financial charts with data:",
+          financialMetrics
+        );
+
+        function parseFinancialValue(value) {
+          if (!value || value === "N/A") return 0;
+          const numStr = value.replace(/[$,%]/g, "");
+          if (value.includes("B")) return parseFloat(numStr) * 1000;
+          if (value.includes("M")) return parseFloat(numStr);
+          if (value.includes("%")) return parseFloat(numStr);
+          return parseFloat(numStr);
+        }
+
+        try {
+          const revenueCtx = document.getElementById("revenueChart");
+          if (revenueCtx) {
+            if (window.revenueChartInstance)
+              window.revenueChartInstance.destroy();
+            window.revenueChartInstance = new Chart(
+              revenueCtx.getContext("2d"),
+              {
+                type: "bar",
+                data: {
+                  labels: ["Revenue", "Net Income"],
+                  datasets: [
+                    {
+                      label: "Amount (Billions)",
+                      data: [
+                        parseFinancialValue(financialMetrics["Revenue"]),
+                        parseFinancialValue(financialMetrics["Net Income"]),
+                      ],
+                      backgroundColor: ["#4361ee", "#38b000"],
+                      borderColor: ["#3f37c9", "#2d8a00"],
+                      borderWidth: 2,
+                    },
+                  ],
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                      callbacks: {
+                        label: function (context) {
+                          return `${context.label}: $${context.parsed.toFixed(
+                            1
+                          )}B`;
+                        },
+                      },
+                    },
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      title: { display: true, text: "Billions ($)" },
+                    },
+                  },
+                },
+              }
+            );
+          }
+
+          const marginCtx = document.getElementById("marginChart");
+          if (marginCtx) {
+            if (window.marginChartInstance)
+              window.marginChartInstance.destroy();
+            window.marginChartInstance = new Chart(marginCtx.getContext("2d"), {
+              type: "radar",
+              data: {
+                labels: [
+                  "Gross Margin",
+                  "EBITDA Margin",
+                  "Operating Margin",
+                  "Profit Margin",
+                ],
+                datasets: [
+                  {
+                    label: "Margin %",
+                    data: [
+                      parseFinancialValue(financialMetrics["Gross Margin (%)"]),
+                      parseFinancialValue(
+                        financialMetrics["EBITDA Margin (%)"]
+                      ),
+                      parseFinancialValue(
+                        financialMetrics["Operating Margin (%)"]
+                      ),
+                      parseFinancialValue(
+                        financialMetrics["Profit Margin (%)"]
+                      ),
+                    ],
+                    backgroundColor: "rgba(67, 97, 238, 0.2)",
+                    borderColor: "#4361ee",
+                    borderWidth: 2,
+                    pointBackgroundColor: "#4361ee",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "#4361ee",
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                  tooltip: {
+                    callbacks: {
+                      label: function (context) {
+                        return `${context.label}: ${context.parsed}%`;
+                      },
+                    },
+                  },
+                },
+                scales: {
+                  r: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                      callback: function (value) {
+                        return value + "%";
+                      },
+                    },
+                  },
+                },
+              },
+            });
+          }
+
+          const healthCtx = document.getElementById("healthChart");
+          if (healthCtx) {
+            if (window.healthChartInstance)
+              window.healthChartInstance.destroy();
+            window.healthChartInstance = new Chart(healthCtx.getContext("2d"), {
+              type: "bar",
+              data: {
+                labels: ["Current Ratio", "Quick Ratio", "Debt-to-Equity"],
+                datasets: [
+                  {
+                    label: "Financial Health Metrics",
+                    data: [
+                      parseFinancialValue(financialMetrics["Current Ratio"]),
+                      parseFinancialValue(financialMetrics["Quick Ratio"]),
+                      parseFinancialValue(financialMetrics["Debt-to-Equity"]),
+                    ],
+                    backgroundColor: ["#38b000", "#ff9e00", "#ef233c"],
+                    borderColor: ["#2d8a00", "#e08e00", "#d11a2d"],
+                    borderWidth: 2,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                  tooltip: {
+                    callbacks: {
+                      label: function (context) {
+                        const label = context.label || "";
+                        const value = context.parsed;
+                        return `${label}: ${value.toFixed(2)}`;
+                      },
+                    },
+                  },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: { display: true, text: "Ratio Value" },
+                  },
+                },
+              },
+            });
+          }
+
+          const cashFlowCtx = document.getElementById("cashFlowChart");
+          if (cashFlowCtx) {
+            if (window.cashFlowChartInstance)
+              window.cashFlowChartInstance.destroy();
+            window.cashFlowChartInstance = new Chart(
+              cashFlowCtx.getContext("2d"),
+              {
+                type: "pie",
+                data: {
+                  labels: ["Free Cash Flow", "Total Cash", "Total Debt"],
+                  datasets: [
+                    {
+                      data: [
+                        parseFinancialValue(financialMetrics["Free Cash Flow"]),
+                        parseFinancialValue(financialMetrics["Total Cash"]),
+                        parseFinancialValue(financialMetrics["Total Debt"]),
+                      ],
+                      backgroundColor: ["#38b000", "#4cc9f0", "#ef233c"],
+                      borderWidth: 2,
+                      borderColor: "#fff",
+                    },
+                  ],
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      position: "bottom",
+                      labels: {
+                        padding: 15,
+                        usePointStyle: true,
+                        font: { size: 12 },
+                      },
+                    },
+                    tooltip: {
+                      callbacks: {
+                        label: function (context) {
+                          const label = context.label || "";
+                          const value = context.parsed;
+                          return `${label}: $${value.toFixed(1)}B`;
+                        },
+                      },
+                    },
+                  },
+                },
+              }
+            );
+          }
+        } catch (error) {
+          console.error("Error initializing charts:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("welcomeSection").style.display = "block";
+        document.getElementById("tabsContainer").style.display = "none";
+        document.getElementById("progressSection").style.display = "none";
+        document.getElementById("successMessage").style.display = "none";
+      });
+    </script>
+  </body>
+</html>

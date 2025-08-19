@@ -1,0 +1,15 @@
+openai
+langchain
+requests
+beautifulsoup4
+pandas
+tqdm
+yfinance
+streamlit
+plotly
+matplotlib
+seaborn
+reportlab
+fpdf2
+flask
+flask-cors

@@ -32,5 +32,6 @@ Clone the repository:
 pip install -r requirements.txt
 python app.py
 ```
-git clone https://github.com/your-username/prelytics.git
-cd prelytics
+```git clone https://github.com/your-username/prelytics.git```
+```cd prelytics```
+
